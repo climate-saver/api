@@ -5,4 +5,4 @@ const UserSchema = new mongoose.Schema({
   name: String,
 });
 
-export const Group = mongoose.model<UserDocument, UserModel>('User', UserSchema);
+export const User = mongoose.model<UserDocument, UserModel>('User', UserSchema);

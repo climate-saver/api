@@ -10,9 +10,32 @@
     "mongoose": "^7.4.0",
     "typescript": "^5.1.6"
   },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "plugin:@typescript-eslint/eslint-recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "rules": {
+      "@typescript-eslint/explicit-member-accessibility": "off",
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/no-empty-interface": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/interface-name-prefix": "off",
+      "@typescript-eslint/no-var-require": "off",
+      "prefer-const": "off",
+      "prefer-promise-reject-errors": "off",
+      "space-before-function-paren": "off"
+    }
+  },
   "scripts": {
     "build": "tsc",
     "dev": "nodemon",
+    "lint": " eslint --max-warnings 0 \"**/*.ts\" && tsc",
     "prettier": "prettier --write \"**/*.{ts,tsx}\"",
     "start": "ts-node server.ts",
     "types": "mtgen --no-format -o ./modelInterfaces.ts models/"
@@ -28,6 +51,10 @@
     "useTabs": false
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "@typescript-eslint/parser": "^6.1.0",
+    "eslint": "^8.45.0",
+    "eslint-plugin-prettier": "^5.0.0",
     "mongoose-tsgen": "^9.2.6",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.0",
