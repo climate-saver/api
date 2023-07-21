@@ -1,0 +1,14 @@
+{
+  "Environment": {
+    "name": "Development",
+    "shortName": "dev",
+    "apiProtocol": "http://",
+    "apiUrl": "localhost:1338",
+    "dbUri": "mongodb://localhost/climatesaver",
+    "dbUsername": "",
+    "dbPassword": "",
+    "readOnlyDbUri": "mongodb://localhost/climatesaver",
+    "readOnlyDbUsername": "",
+    "readOnlyDbPassword": ""
+  }
+}
