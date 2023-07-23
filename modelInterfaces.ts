@@ -5,91 +5,253 @@
 
 // NOTE: ANY CHANGES MADE WILL BE OVERWRITTEN ON SUBSEQUENT EXECUTIONS OF MONGOOSE-TSGEN.
 
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+
+/**
+ * Lean version of HomeEnergyProjectDocument
+ * 
+ * This has all Mongoose getters & functions removed. This type will be returned from `HomeEnergyProjectDocument.toObject()`. To avoid conflicts with model names, use the type alias `HomeEnergyProjectObject`.
+ * ```
+ * const homeenergyprojectObject = homeenergyproject.toObject();
+ * ```
+ */
+export type HomeEnergyProject = {
+name?: string;
+_id: mongoose.Types.ObjectId;
+}
+
+/**
+ * Lean version of HomeEnergyProjectDocument (type alias of `HomeEnergyProject`)
+ * 
+ * Use this type alias to avoid conflicts with model names:
+ * ```
+ * import { HomeEnergyProject } from "../models"
+ * import { HomeEnergyProjectObject } from "../interfaces/mongoose.gen.ts"
+ * 
+ * const homeenergyprojectObject: HomeEnergyProjectObject = homeenergyproject.toObject();
+ * ```
+ */
+export type HomeEnergyProjectObject = HomeEnergyProject
+
+/**
+ * Mongoose Query type
+ * 
+ * This type is returned from query functions. For most use cases, you should not need to use this type explicitly.
+ */
+export type HomeEnergyProjectQuery = mongoose.Query<any, HomeEnergyProjectDocument, HomeEnergyProjectQueries> & HomeEnergyProjectQueries
+
+/**
+ * Mongoose Query helper types
+ * 
+ * This type represents `HomeEnergyProjectSchema.query`. For most use cases, you should not need to use this type explicitly.
+ */
+export type HomeEnergyProjectQueries = {
+}
+
+export type HomeEnergyProjectMethods = {
+}
+
+export type HomeEnergyProjectStatics = {
+}
+
+/**
+ * Mongoose Model type
+ * 
+ * Pass this type to the Mongoose Model constructor:
+ * ```
+ * const HomeEnergyProject = mongoose.model<HomeEnergyProjectDocument, HomeEnergyProjectModel>("HomeEnergyProject", HomeEnergyProjectSchema);
+ * ```
+ */
+export type HomeEnergyProjectModel = mongoose.Model<HomeEnergyProjectDocument, HomeEnergyProjectQueries> & HomeEnergyProjectStatics
+
+/**
+ * Mongoose Schema type
+ * 
+ * Assign this type to new HomeEnergyProject schema instances:
+ * ```
+ * const HomeEnergyProjectSchema: HomeEnergyProjectSchema = new mongoose.Schema({ ... })
+ * ```
+ */
+export type HomeEnergyProjectSchema = mongoose.Schema<HomeEnergyProjectDocument, HomeEnergyProjectModel, HomeEnergyProjectMethods, HomeEnergyProjectQueries>
+
+/**
+ * Mongoose Document type
+ * 
+ * Pass this type to the Mongoose Model constructor:
+ * ```
+ * const HomeEnergyProject = mongoose.model<HomeEnergyProjectDocument, HomeEnergyProjectModel>("HomeEnergyProject", HomeEnergyProjectSchema);
+ * ```
+ */
+export type HomeEnergyProjectDocument = mongoose.Document<mongoose.Types.ObjectId, HomeEnergyProjectQueries> & HomeEnergyProjectMethods & {
+name?: string;
+_id: mongoose.Types.ObjectId;
+}
+
+/**
+ * Lean version of RebateDocument
+ * 
+ * This has all Mongoose getters & functions removed. This type will be returned from `RebateDocument.toObject()`. To avoid conflicts with model names, use the type alias `RebateObject`.
+ * ```
+ * const rebateObject = rebate.toObject();
+ * ```
+ */
+export type Rebate = {
+name?: string;
+_id: mongoose.Types.ObjectId;
+}
+
+/**
+ * Lean version of RebateDocument (type alias of `Rebate`)
+ * 
+ * Use this type alias to avoid conflicts with model names:
+ * ```
+ * import { Rebate } from "../models"
+ * import { RebateObject } from "../interfaces/mongoose.gen.ts"
+ * 
+ * const rebateObject: RebateObject = rebate.toObject();
+ * ```
+ */
+export type RebateObject = Rebate
+
+/**
+ * Mongoose Query type
+ * 
+ * This type is returned from query functions. For most use cases, you should not need to use this type explicitly.
+ */
+export type RebateQuery = mongoose.Query<any, RebateDocument, RebateQueries> & RebateQueries
+
+/**
+ * Mongoose Query helper types
+ * 
+ * This type represents `RebateSchema.query`. For most use cases, you should not need to use this type explicitly.
+ */
+export type RebateQueries = {
+}
+
+export type RebateMethods = {
+}
+
+export type RebateStatics = {
+}
+
+/**
+ * Mongoose Model type
+ * 
+ * Pass this type to the Mongoose Model constructor:
+ * ```
+ * const Rebate = mongoose.model<RebateDocument, RebateModel>("Rebate", RebateSchema);
+ * ```
+ */
+export type RebateModel = mongoose.Model<RebateDocument, RebateQueries> & RebateStatics
+
+/**
+ * Mongoose Schema type
+ * 
+ * Assign this type to new Rebate schema instances:
+ * ```
+ * const RebateSchema: RebateSchema = new mongoose.Schema({ ... })
+ * ```
+ */
+export type RebateSchema = mongoose.Schema<RebateDocument, RebateModel, RebateMethods, RebateQueries>
+
+/**
+ * Mongoose Document type
+ * 
+ * Pass this type to the Mongoose Model constructor:
+ * ```
+ * const Rebate = mongoose.model<RebateDocument, RebateModel>("Rebate", RebateSchema);
+ * ```
+ */
+export type RebateDocument = mongoose.Document<mongoose.Types.ObjectId, RebateQueries> & RebateMethods & {
+name?: string;
+_id: mongoose.Types.ObjectId;
+}
 
 /**
  * Lean version of UserDocument
- *
+ * 
  * This has all Mongoose getters & functions removed. This type will be returned from `UserDocument.toObject()`. To avoid conflicts with model names, use the type alias `UserObject`.
  * ```
  * const userObject = user.toObject();
  * ```
  */
 export type User = {
-  name?: string;
-  _id: mongoose.Types.ObjectId;
-};
+name?: string;
+_id: mongoose.Types.ObjectId;
+}
 
 /**
  * Lean version of UserDocument (type alias of `User`)
- *
+ * 
  * Use this type alias to avoid conflicts with model names:
  * ```
  * import { User } from "../models"
  * import { UserObject } from "../interfaces/mongoose.gen.ts"
- *
+ * 
  * const userObject: UserObject = user.toObject();
  * ```
  */
-export type UserObject = User;
+export type UserObject = User
 
 /**
  * Mongoose Query type
- *
+ * 
  * This type is returned from query functions. For most use cases, you should not need to use this type explicitly.
  */
-export type UserQuery = mongoose.Query<any, UserDocument, UserQueries> & UserQueries;
+export type UserQuery = mongoose.Query<any, UserDocument, UserQueries> & UserQueries
 
 /**
  * Mongoose Query helper types
- *
+ * 
  * This type represents `UserSchema.query`. For most use cases, you should not need to use this type explicitly.
  */
-export type UserQueries = {};
+export type UserQueries = {
+}
 
-export type UserMethods = {};
+export type UserMethods = {
+}
 
-export type UserStatics = {};
+export type UserStatics = {
+}
 
 /**
  * Mongoose Model type
- *
+ * 
  * Pass this type to the Mongoose Model constructor:
  * ```
  * const User = mongoose.model<UserDocument, UserModel>("User", UserSchema);
  * ```
  */
-export type UserModel = mongoose.Model<UserDocument, UserQueries> & UserStatics;
+export type UserModel = mongoose.Model<UserDocument, UserQueries> & UserStatics
 
 /**
  * Mongoose Schema type
- *
+ * 
  * Assign this type to new User schema instances:
  * ```
  * const UserSchema: UserSchema = new mongoose.Schema({ ... })
  * ```
  */
-export type UserSchema = mongoose.Schema<UserDocument, UserModel, UserMethods, UserQueries>;
+export type UserSchema = mongoose.Schema<UserDocument, UserModel, UserMethods, UserQueries>
 
 /**
  * Mongoose Document type
- *
+ * 
  * Pass this type to the Mongoose Model constructor:
  * ```
  * const User = mongoose.model<UserDocument, UserModel>("User", UserSchema);
  * ```
  */
-export type UserDocument = mongoose.Document<mongoose.Types.ObjectId, UserQueries> &
-  UserMethods & {
-    name?: string;
-    _id: mongoose.Types.ObjectId;
-  };
+export type UserDocument = mongoose.Document<mongoose.Types.ObjectId, UserQueries> & UserMethods & {
+name?: string;
+_id: mongoose.Types.ObjectId;
+}
 
 /**
  * Check if a property on a document is populated:
  * ```
  * import { IsPopulated } from "../interfaces/mongoose.gen.ts"
- *
+ * 
  * if (IsPopulated<UserDocument["bestFriend"]>) { ... }
  * ```
  */
@@ -98,26 +260,26 @@ export function IsPopulated<T>(doc: T | mongoose.Types.ObjectId): doc is T {
 }
 
 /**
- * Helper type used by `PopulatedDocument`. Returns the parent property of a string
+ * Helper type used by `PopulatedDocument`. Returns the parent property of a string 
  * representing a nested property (i.e. `friend.user` -> `friend`)
  */
 type ParentProperty<T> = T extends `${infer P}.${string}` ? P : never;
 
 /**
- * Helper type used by `PopulatedDocument`. Returns the child property of a string
- * representing a nested property (i.e. `friend.user` -> `user`).
- */
+* Helper type used by `PopulatedDocument`. Returns the child property of a string 
+* representing a nested property (i.e. `friend.user` -> `user`).
+*/
 type ChildProperty<T> = T extends `${string}.${infer C}` ? C : never;
 
 /**
- * Helper type used by `PopulatedDocument`. Removes the `ObjectId` from the general union type generated
- * for ref documents (i.e. `mongoose.Types.ObjectId | UserDocument` -> `UserDocument`)
- */
-type PopulatedProperty<Root, T extends keyof Root> = Omit<Root, T> & {
-  [ref in T]: Root[T] extends mongoose.Types.Array<infer U>
-    ? mongoose.Types.Array<Exclude<U, mongoose.Types.ObjectId>>
-    : Exclude<Root[T], mongoose.Types.ObjectId>;
-};
+* Helper type used by `PopulatedDocument`. Removes the `ObjectId` from the general union type generated 
+* for ref documents (i.e. `mongoose.Types.ObjectId | UserDocument` -> `UserDocument`)
+*/
+type PopulatedProperty<Root, T extends keyof Root> = Omit<Root, T> & { 
+  [ref in T]: Root[T] extends mongoose.Types.Array<infer U> ? 
+    mongoose.Types.Array<Exclude<U, mongoose.Types.ObjectId>> :
+    Exclude<Root[T], mongoose.Types.ObjectId> 
+}
 
 /**
  * Populate properties on a document type:
@@ -129,21 +291,31 @@ type PopulatedProperty<Root, T extends keyof Root> = Omit<Root, T> & {
  * }
  * ```
  */
-export type PopulatedDocument<DocType, T> = T extends keyof DocType
-  ? PopulatedProperty<DocType, T>
-  : ParentProperty<T> extends keyof DocType
-  ? Omit<DocType, ParentProperty<T>> & {
-      [ref in ParentProperty<T>]: DocType[ParentProperty<T>] extends mongoose.Types.Array<infer U>
-        ? mongoose.Types.Array<
-            ChildProperty<T> extends keyof U
-              ? PopulatedProperty<U, ChildProperty<T>>
-              : PopulatedDocument<U, ChildProperty<T>>
-          >
-        : ChildProperty<T> extends keyof DocType[ParentProperty<T>]
-        ? PopulatedProperty<DocType[ParentProperty<T>], ChildProperty<T>>
-        : PopulatedDocument<DocType[ParentProperty<T>], ChildProperty<T>>;
-    }
-  : DocType;
+export type PopulatedDocument<
+DocType,
+T
+> = T extends keyof DocType
+? PopulatedProperty<DocType, T> 
+: (
+    ParentProperty<T> extends keyof DocType
+      ? Omit<DocType, ParentProperty<T>> &
+      {
+        [ref in ParentProperty<T>]: (
+          DocType[ParentProperty<T>] extends mongoose.Types.Array<infer U> ? (
+            mongoose.Types.Array<
+              ChildProperty<T> extends keyof U 
+                ? PopulatedProperty<U, ChildProperty<T>> 
+                : PopulatedDocument<U, ChildProperty<T>>
+            >
+          ) : (
+            ChildProperty<T> extends keyof DocType[ParentProperty<T>]
+            ? PopulatedProperty<DocType[ParentProperty<T>], ChildProperty<T>>
+            : PopulatedDocument<DocType[ParentProperty<T>], ChildProperty<T>>
+          )
+        )
+      }
+      : DocType
+  )
 
 /**
  * Helper types used by the populate overloads
@@ -154,35 +326,21 @@ type Modify<T, R> = Omit<T, keyof R> & R;
 /**
  * Augment mongoose with Query.populate overloads
  */
-declare module 'mongoose' {
+declare module "mongoose" {
   interface Query<ResultType, DocType, THelpers = {}> {
-    populate<T extends string>(
-      path: T,
-      select?: string | any,
-      model?: string | Model<any, THelpers>,
-      match?: any
-    ): Query<
-      ResultType extends Array<DocType>
-        ? Array<PopulatedDocument<Unarray<ResultType>, T>>
-        : ResultType extends DocType
-        ? PopulatedDocument<Unarray<ResultType>, T>
-        : ResultType,
+    populate<T extends string>(path: T, select?: string | any, model?: string | Model<any, THelpers>, match?: any): Query<
+      ResultType extends Array<DocType> ? Array<PopulatedDocument<Unarray<ResultType>, T>> : (ResultType extends DocType ? PopulatedDocument<Unarray<ResultType>, T> : ResultType),
       DocType,
       THelpers
-    > &
-      THelpers;
+    > & THelpers;
 
-    populate<T extends string>(
-      options: Modify<PopulateOptions, {path: T}> | Array<PopulateOptions>
-    ): Query<
-      ResultType extends Array<DocType>
-        ? Array<PopulatedDocument<Unarray<ResultType>, T>>
-        : ResultType extends DocType
-        ? PopulatedDocument<Unarray<ResultType>, T>
-        : ResultType,
+    populate<T extends string>(options: Modify<PopulateOptions, { path: T }> | Array<PopulateOptions>): Query<
+      ResultType extends Array<DocType> ? Array<PopulatedDocument<Unarray<ResultType>, T>> : (ResultType extends DocType ? PopulatedDocument<Unarray<ResultType>, T> : ResultType),
       DocType,
       THelpers
-    > &
-      THelpers;
+    > & THelpers;
   }
 }
+
+
+
