@@ -99,7 +99,7 @@ export const HomeEnergyProjectService = {
     const prompt =
       `${this.getUserInfoAsConversationalMessage(userInfo)} how many dollars would I save a month ` +
       `in energy savings from a ${project.name?.toLowerCase()} project installation? Give ` +
-      `a rough estimate`;
+      `a rough estimate, in a few words.`;
     const completion = await openAi.createChatCompletion({
       model: 'gpt-3.5-turbo',
       temperature: 0,

@@ -7,7 +7,7 @@ const main = async function () {
   const userInfo = {
     ageOfHome: 100,
     squareFootage: 2000,
-    monthlyEnergyBill: 300,
+    monthlyEnergyBill: 400,
     monthlyEnergyUsage: 7500000,
     currentCoolingSystem: 'Central Air Conditioner',
     currentHeatingSystem: 'Furnace',
