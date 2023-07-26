@@ -6,9 +6,11 @@
     "outDir": "./build",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "noImplicitThis": true,
     "paths": {
       "@modelInterfaces": ["./modelInterfaces"]
     },
+    "lib": ["es2017", "dom", "es2017.object"],
     "strict": true,
     "skipLibCheck": true
   }

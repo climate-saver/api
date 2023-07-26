@@ -1,5 +1,5 @@
 import {HomeEnergyProjectDocument} from '@modelInterfaces';
-import {UserHomeEnergyProjectInfo} from '../global/types';
+import {UserHomeInfo} from '../global/types';
 import {OpenAI} from '../libs/openAI';
 
 const GPT_CALL_FUNCTIONS = {
@@ -12,23 +12,23 @@ const GPT_CALL_FUNCTIONS = {
         isRecommended: {
           type: 'boolean',
           description: 'Whether the project installation is recommended or not',
-        }
-      }
-    }
+        },
+      },
+    },
   },
   ESTIMATE_ANNUAL_SAVINGS: {
     name: 'estimateAnnualSavings',
-    description: 'How many dollars the project installation would save annually from energy ' +
-      'savings.',
+    description:
+      'How many dollars the project installation would save annually from energy ' + 'savings.',
     parameters: {
       type: 'object',
       properties: {
         monthlySavings: {
           type: 'integer',
           description: 'Total monthly savings in dollars from energy savings',
-        }
-      }
-    }
+        },
+      },
+    },
   },
   ESTIMATE_INSTALLATION_COST: {
     name: 'estimateInstallationCost',
@@ -39,9 +39,9 @@ const GPT_CALL_FUNCTIONS = {
         installationCost: {
           type: 'integer',
           description: 'Total cost in dollars of the project installation',
-        }
-      }
-    }
+        },
+      },
+    },
   },
   ESTIMATE_GREENHOUSE_GAS_REDUCTION: {
     name: 'estimateGreenhouseGasReduction',
@@ -52,14 +52,14 @@ const GPT_CALL_FUNCTIONS = {
         percentageReduction: {
           type: 'integer',
           description: 'Estimated percentage reduction in greenhouse gas emissions',
-        }
-      }
-    }
+        },
+      },
+    },
   },
-}
+};
 
 export const HomeEnergyProjectService = {
-  getUserInfoAsConversationalMessage: function (userInfo: UserHomeEnergyProjectInfo): string {
+  getUserInfoAsConversationalMessage: function (userInfo: UserHomeInfo): string {
     return (
       `I live in a ${userInfo.ageOfHome} year old home with ${userInfo.squareFootage} ` +
       `square feet, have a $${userInfo.monthlyEnergyBill} a month energy bill, ` +
@@ -71,35 +71,45 @@ export const HomeEnergyProjectService = {
 
   isRecommended: async function (
     project: HomeEnergyProjectDocument,
-    userInfo: UserHomeEnergyProjectInfo
+    userInfo: UserHomeInfo
   ): Promise<boolean> {
     const openAi = OpenAI.getApi();
     const prompt =
       `${this.getUserInfoAsConversationalMessage(userInfo)} Would you recommend a ` +
-      `${project.name?.toLowerCase()} project installation?`;
+      `${project.name?.toLowerCase()} project installation? Answer in a few words.`;
     const completion = await openAi.createChatCompletion({
       model: 'gpt-3.5-turbo',
       temperature: 0,
       messages: [{role: 'user', content: prompt}],
-      function_call: {name: GPT_CALL_FUNCTIONS.WOULD_RECOMMEND.name},
-      functions: [
-        GPT_CALL_FUNCTIONS.WOULD_RECOMMEND
-      ]
     });
-    console.log(completion);
     console.log(JSON.stringify(completion.data, null, 2));
-    return true;
+    const functionCall = await openAi.createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      temperature: 0,
+      messages: [{role: 'user', content: completion.data.choices[0].message?.content}],
+      function_call: {name: GPT_CALL_FUNCTIONS.WOULD_RECOMMEND.name},
+      functions: [GPT_CALL_FUNCTIONS.WOULD_RECOMMEND],
+    });
+    console.log(JSON.stringify(functionCall.data, null, 2));
+    let functionCallArgs = functionCall.data.choices.at(0)?.message?.function_call?.arguments;
+    if (!functionCallArgs) {
+      throw new Error('No value found.');
+    }
+    return Boolean(JSON.parse(functionCallArgs).isRecommended);
   },
 
-  estimateAnnualSavings: async function (
+  estimateMonthlySavings: async function (
     project: HomeEnergyProjectDocument,
-    userInfo: UserHomeEnergyProjectInfo
+    userInfo: UserHomeInfo
   ): Promise<number> {
     const openAi = OpenAI.getApi();
     const prompt =
-      `${this.getUserInfoAsConversationalMessage(userInfo)} how many dollars would I save a month ` +
+      `${this.getUserInfoAsConversationalMessage(
+        userInfo
+      )} how many dollars would I save a month ` +
       `in energy savings from a ${project.name?.toLowerCase()} project installation? Give ` +
-      `a rough estimate, in a few words.`;
+      `a rough estimate, in a few words, and use average estimates of necessary variables ` +
+      `if you don't know the exact values.`;
     const completion = await openAi.createChatCompletion({
       model: 'gpt-3.5-turbo',
       temperature: 0,
@@ -111,9 +121,7 @@ export const HomeEnergyProjectService = {
       temperature: 0,
       messages: [{role: 'user', content: completion.data.choices[0].message?.content}],
       function_call: {name: GPT_CALL_FUNCTIONS.ESTIMATE_ANNUAL_SAVINGS.name},
-      functions: [
-        GPT_CALL_FUNCTIONS.ESTIMATE_ANNUAL_SAVINGS
-      ]
+      functions: [GPT_CALL_FUNCTIONS.ESTIMATE_ANNUAL_SAVINGS],
     });
     console.log(JSON.stringify(functionCall.data, null, 2));
     let functionCallArgs = functionCall.data.choices.at(0)?.message?.function_call?.arguments;
@@ -125,13 +133,14 @@ export const HomeEnergyProjectService = {
 
   estimateCost: async function (
     project: HomeEnergyProjectDocument,
-    userInfo: UserHomeEnergyProjectInfo
+    userInfo: UserHomeInfo
   ): Promise<number> {
     const openAi = OpenAI.getApi();
     const prompt =
       `${this.getUserInfoAsConversationalMessage(userInfo)} how much would ` +
       `a ${project.name?.toLowerCase()} installation cost? Give ` +
-      `a rough estimate`;
+      `a rough estimate, in a few words, and use average estimates of necessary variables ` +
+      `if you don't know the exact values.`;
     const completion = await openAi.createChatCompletion({
       model: 'gpt-3.5-turbo',
       temperature: 0,
@@ -143,9 +152,7 @@ export const HomeEnergyProjectService = {
       temperature: 0,
       messages: [{role: 'user', content: completion.data.choices[0].message?.content}],
       function_call: {name: GPT_CALL_FUNCTIONS.ESTIMATE_INSTALLATION_COST.name},
-      functions: [
-        GPT_CALL_FUNCTIONS.ESTIMATE_INSTALLATION_COST
-      ]
+      functions: [GPT_CALL_FUNCTIONS.ESTIMATE_INSTALLATION_COST],
     });
     console.log(JSON.stringify(functionCall.data, null, 2));
     let functionCallArgs = functionCall.data.choices.at(0)?.message?.function_call?.arguments;
@@ -157,7 +164,7 @@ export const HomeEnergyProjectService = {
 
   estimateEmissionReduction: async function (
     project: HomeEnergyProjectDocument,
-    userInfo: UserHomeEnergyProjectInfo
+    userInfo: UserHomeInfo
   ): Promise<number> {
     const openAi = OpenAI.getApi();
     const prompt =
@@ -175,9 +182,7 @@ export const HomeEnergyProjectService = {
       temperature: 0,
       messages: [{role: 'user', content: completion.data.choices[0].message?.content}],
       function_call: {name: GPT_CALL_FUNCTIONS.ESTIMATE_GREENHOUSE_GAS_REDUCTION.name},
-      functions: [
-        GPT_CALL_FUNCTIONS.ESTIMATE_GREENHOUSE_GAS_REDUCTION
-      ]
+      functions: [GPT_CALL_FUNCTIONS.ESTIMATE_GREENHOUSE_GAS_REDUCTION],
     });
     console.log(JSON.stringify(functionCall.data, null, 2));
     let functionCallArgs = functionCall.data.choices.at(0)?.message?.function_call?.arguments;

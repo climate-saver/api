@@ -1,4 +1,4 @@
-export interface UserHomeEnergyProjectInfo {
+export interface UserHomeInfo {
   squareFootage?: number;
   currentHeatingSystem?: string;
   currentCoolingSystem?: string;
@@ -6,3 +6,5 @@ export interface UserHomeEnergyProjectInfo {
   monthlyEnergyUsage?: number;
   ageOfHome?: number;
 }
+
+export type UserHomeInfoKey = keyof UserHomeInfo;

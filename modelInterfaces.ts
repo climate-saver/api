@@ -8,6 +8,122 @@
 import mongoose from 'mongoose';
 
 /**
+ * Lean version of ConversationMessageDocument
+ *
+ * This has all Mongoose getters & functions removed. This type will be returned from `ConversationDocument.toObject()`.
+ * ```
+ * const conversationObject = conversation.toObject();
+ * ```
+ */
+export type ConversationMessage = {
+  message?: string;
+  sender?: 'User' | 'Bot';
+  homeInfoKey?: string;
+  _id: mongoose.Types.ObjectId;
+};
+
+/**
+ * Lean version of ConversationDocument
+ *
+ * This has all Mongoose getters & functions removed. This type will be returned from `ConversationDocument.toObject()`. To avoid conflicts with model names, use the type alias `ConversationObject`.
+ * ```
+ * const conversationObject = conversation.toObject();
+ * ```
+ */
+export type Conversation = {
+  messages: ConversationMessage[];
+  _id: mongoose.Types.ObjectId;
+  updated?: Date;
+  created?: Date;
+};
+
+/**
+ * Lean version of ConversationDocument (type alias of `Conversation`)
+ *
+ * Use this type alias to avoid conflicts with model names:
+ * ```
+ * import { Conversation } from "../models"
+ * import { ConversationObject } from "../interfaces/mongoose.gen.ts"
+ *
+ * const conversationObject: ConversationObject = conversation.toObject();
+ * ```
+ */
+export type ConversationObject = Conversation;
+
+/**
+ * Mongoose Query type
+ *
+ * This type is returned from query functions. For most use cases, you should not need to use this type explicitly.
+ */
+export type ConversationQuery = mongoose.Query<any, ConversationDocument, ConversationQueries> &
+  ConversationQueries;
+
+/**
+ * Mongoose Query helper types
+ *
+ * This type represents `ConversationSchema.query`. For most use cases, you should not need to use this type explicitly.
+ */
+export type ConversationQueries = {};
+
+export type ConversationMethods = {};
+
+export type ConversationStatics = {};
+
+/**
+ * Mongoose Model type
+ *
+ * Pass this type to the Mongoose Model constructor:
+ * ```
+ * const Conversation = mongoose.model<ConversationDocument, ConversationModel>("Conversation", ConversationSchema);
+ * ```
+ */
+export type ConversationModel = mongoose.Model<ConversationDocument, ConversationQueries> &
+  ConversationStatics;
+
+/**
+ * Mongoose Schema type
+ *
+ * Assign this type to new Conversation schema instances:
+ * ```
+ * const ConversationSchema: ConversationSchema = new mongoose.Schema({ ... })
+ * ```
+ */
+export type ConversationSchema = mongoose.Schema<
+  ConversationDocument,
+  ConversationModel,
+  ConversationMethods,
+  ConversationQueries
+>;
+
+/**
+ * Mongoose Subdocument type
+ *
+ * Type of `ConversationDocument["messages"]` element.
+ */
+export type ConversationMessageDocument = mongoose.Types.Subdocument & {
+  message?: string;
+  sender?: 'User' | 'Bot';
+  homeInfoKey?: string;
+  _id: mongoose.Types.ObjectId;
+};
+
+/**
+ * Mongoose Document type
+ *
+ * Pass this type to the Mongoose Model constructor:
+ * ```
+ * const Conversation = mongoose.model<ConversationDocument, ConversationModel>("Conversation", ConversationSchema);
+ * ```
+ */
+export type ConversationDocument = mongoose.Document<mongoose.Types.ObjectId, ConversationQueries> &
+  ConversationMethods & {
+    messages: mongoose.Types.DocumentArray<ConversationMessageDocument>;
+    _id: mongoose.Types.ObjectId;
+    updated?: Date;
+    created?: Date;
+  };
+
+/**
  * Lean version of HomeEnergyProjectDocument
  *
  * This has all Mongoose getters & functions removed. This type will be returned from `HomeEnergyProjectDocument.toObject()`. To avoid conflicts with model names, use the type alias `HomeEnergyProjectObject`.
@@ -18,6 +134,8 @@ import mongoose from 'mongoose';
 export type HomeEnergyProject = {
   name?: string;
   _id: mongoose.Types.ObjectId;
+  updated?: Date;
+  created?: Date;
 };
 
 /**
@@ -100,6 +218,8 @@ export type HomeEnergyProjectDocument = mongoose.Document<
   HomeEnergyProjectMethods & {
     name?: string;
     _id: mongoose.Types.ObjectId;
+    updated?: Date;
+    created?: Date;
   };
 
 /**
@@ -194,8 +314,18 @@ export type RebateDocument = mongoose.Document<mongoose.Types.ObjectId, RebateQu
  * ```
  */
 export type User = {
-  name?: string;
+  homeInfo: {
+    squareFootage?: number;
+    currentHeatingSystem?: string;
+    currentCoolingSystem?: string;
+    monthlyEnergyBill?: number;
+    monthlyEnergyUsage?: number;
+    ageOfHome?: number;
+  };
+  conversationId?: Conversation['_id'] | Conversation;
   _id: mongoose.Types.ObjectId;
+  updated?: Date;
+  created?: Date;
 };
 
 /**
@@ -227,7 +357,9 @@ export type UserQueries = {};
 
 export type UserMethods = {};
 
-export type UserStatics = {};
+export type UserStatics = {
+  findByConversationId: (this: UserModel, ...args: any[]) => any;
+};
 
 /**
  * Mongoose Model type
@@ -259,8 +391,18 @@ export type UserSchema = mongoose.Schema<UserDocument, UserModel, UserMethods, U
  */
 export type UserDocument = mongoose.Document<mongoose.Types.ObjectId, UserQueries> &
   UserMethods & {
-    name?: string;
+    homeInfo: {
+      squareFootage?: number;
+      currentHeatingSystem?: string;
+      currentCoolingSystem?: string;
+      monthlyEnergyBill?: number;
+      monthlyEnergyUsage?: number;
+      ageOfHome?: number;
+    };
+    conversationId?: ConversationDocument['_id'] | ConversationDocument;
     _id: mongoose.Types.ObjectId;
+    updated?: Date;
+    created?: Date;
   };
 
 /**
