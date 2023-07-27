@@ -18,22 +18,26 @@ const MessagesScript = [
   },
   {
     message: 'What is your current heating system?',
+    answerSuggestions: ['Boiler', 'Furnace', 'Electric'],
     homeInfoKey: 'currentHeatingSystem',
   },
   {
     message: 'What is your current cooling system?',
+    answerSuggestions: ['Central AC', 'Swamp / Evaporative'],
     homeInfoKey: 'currentCoolingSystem',
   },
   {
-    message: 'What is your average monthly energy bill? A rough estimate is totally fine!',
+    message: 'What is your average monthly energy bill?',
     homeInfoKey: 'monthlyEnergyBill',
   },
   {
-    message: 'What is your average monthly energy usage in BTUs? A rough estimate is totally fine!',
+    message: `What is your average monthly energy usage in million BTUs? If you don't ` +
+      `know, you can put 7, which is what the average household uses.`,
+    answerSuggestions: ['5', '7', '10', '15'],
     homeInfoKey: 'monthlyEnergyUsage',
   },
   {
-    message: 'Lastly, what is the age (roughly) of your home?',
+    message: 'Lastly, what is the age in years (roughly) of your home?',
     homeInfoKey: 'ageOfHome',
   },
   {

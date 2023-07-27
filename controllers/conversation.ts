@@ -18,7 +18,7 @@ router.post('/:conversationId/messages', async (req: Request, res: Response) => 
     UserService.maybeAddUserInfoFromMessage(
       req.params.conversationId,
       req.body.message,
-      req.body.userHomeInfoKey
+      req.body.homeInfoKey
     ),
   ]);
   res.sendStatus(204);
