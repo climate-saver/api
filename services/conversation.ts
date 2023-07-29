@@ -28,6 +28,7 @@ const MessagesScript = [
   },
   {
     message: 'What is your average monthly energy bill?',
+    answerSuggestions: ['50', '100', '200', '300'],
     homeInfoKey: 'monthlyEnergyBill',
   },
   {
@@ -84,10 +85,10 @@ export const ConversationService = {
     ]);
     const message =
       `${homeEnergyProject.name}:\n\n` +
-      `- Annual energy savings: $${savings * 12}\n` +
-      `- Total installation cost: $${cost}\n` +
-      `- Annual cost if financed with a 20 year, 6% APR loan: $${cost / 11.3}\n` +
-      `- Carbon footprint reduction: ${percentageReduction}%`;
+      `  Annual energy savings: $${savings * 12}\n` +
+      `- Annual installation cost: $${cost / 11.3}\n` +
+      `= Annual Net Savings: $${(savings * 12) - (cost / 11.3)}\n\n\n` +
+      `Plus, you'll reduce your carbon footprint by ${percentageReduction}%`;
     return this.getBotMessage(message);
   },
 
@@ -123,8 +124,8 @@ export const ConversationService = {
     }
     messages.push(
       this.getBotMessage(
-        `Note that all the numbers above are just estimates. I recommend contacting ` +
-          `a professional for more accurate pricing.`
+        `Note that all the numbers above are just estimates. Would you like to request` +
+          ` free quotes from our network of local contractors?`
       )
     );
     return messages;
