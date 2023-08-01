@@ -17,5 +17,5 @@ mongoose.connect(dbUri!, {
 });
 
 app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/`);
+  console.log(`Listening at port ${port}/`);
 });
