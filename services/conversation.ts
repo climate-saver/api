@@ -32,7 +32,8 @@ const MessagesScript = [
     homeInfoKey: 'monthlyEnergyBill',
   },
   {
-    message: `What is your average monthly energy usage in million BTUs? If you don't ` +
+    message:
+      `What is your average monthly energy usage in million BTUs? If you don't ` +
       `know, you can put 7, which is what the average household uses.`,
     answerSuggestions: ['5', '7', '10', '15'],
     homeInfoKey: 'monthlyEnergyUsage',
@@ -66,7 +67,7 @@ export const ConversationService = {
     await conversation.save();
   },
 
-  addNextMessages: async function(conversationId: string, messages: IMessage[]) {
+  addNextMessages: async function (conversationId: string, messages: IMessage[]) {
     const conversation = await this.getConversation(conversationId);
     for (let message of messages) {
       conversation.messages.push(message);
@@ -87,7 +88,7 @@ export const ConversationService = {
       `${homeEnergyProject.name}:\n\n` +
       `  Annual energy savings: $${savings * 12}\n` +
       `- Annual installation cost: $${cost / 11.3}\n` +
-      `= Annual Net Savings: $${(savings * 12) - (cost / 11.3)}\n\n\n` +
+      `= Annual Net Savings: $${savings * 12 - cost / 11.3}\n\n\n` +
       `Plus, you'll reduce your carbon footprint by ${percentageReduction}%`;
     return this.getBotMessage(message);
   },

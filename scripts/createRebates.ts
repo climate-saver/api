@@ -2,7 +2,7 @@ import {ScriptBase} from './base';
 import {SeedDatabaseService} from '../services/seedDatabase';
 
 const main = async function () {
-  await SeedDatabaseService.createHomeEnergyProjects();
+  await SeedDatabaseService.createRebates();
 };
 
 if (require.main === module) {

@@ -19,6 +19,8 @@ export type ConversationMessage = {
   message?: string;
   sender?: 'User' | 'Bot';
   homeInfoKey?: string;
+  answerSuggestions: string[];
+  more?: boolean;
   _id: mongoose.Types.ObjectId;
 };
 
@@ -104,6 +106,8 @@ export type ConversationMessageDocument = mongoose.Types.Subdocument & {
   message?: string;
   sender?: 'User' | 'Bot';
   homeInfoKey?: string;
+  answerSuggestions: mongoose.Types.Array<string>;
+  more?: boolean;
   _id: mongoose.Types.ObjectId;
 };
 
@@ -132,6 +136,7 @@ export type ConversationDocument = mongoose.Document<mongoose.Types.ObjectId, Co
  * ```
  */
 export type HomeEnergyProject = {
+  key?: string;
   name?: string;
   _id: mongoose.Types.ObjectId;
   updated?: Date;
@@ -216,11 +221,26 @@ export type HomeEnergyProjectDocument = mongoose.Document<
   HomeEnergyProjectQueries
 > &
   HomeEnergyProjectMethods & {
+    key?: string;
     name?: string;
     _id: mongoose.Types.ObjectId;
     updated?: Date;
     created?: Date;
   };
+
+/**
+ * Lean version of RebateCalculationDocument
+ *
+ * This has all Mongoose getters & functions removed. This type will be returned from `RebateDocument.toObject()`.
+ * ```
+ * const rebateObject = rebate.toObject();
+ * ```
+ */
+export type RebateCalculation = {
+  percent?: number;
+  max?: number;
+  _id: mongoose.Types.ObjectId;
+};
 
 /**
  * Lean version of RebateDocument
@@ -232,6 +252,8 @@ export type HomeEnergyProjectDocument = mongoose.Document<
  */
 export type Rebate = {
   name?: string;
+  homeEnergyProjectId?: HomeEnergyProject['_id'] | HomeEnergyProject;
+  calculation?: RebateCalculation;
   _id: mongoose.Types.ObjectId;
 };
 
@@ -299,9 +321,25 @@ export type RebateSchema = mongoose.Schema<
  * const Rebate = mongoose.model<RebateDocument, RebateModel>("Rebate", RebateSchema);
  * ```
  */
+export type RebateCalculationDocument = mongoose.Document<mongoose.Types.ObjectId> & {
+  percent?: number;
+  max?: number;
+  _id: mongoose.Types.ObjectId;
+};
+
+/**
+ * Mongoose Document type
+ *
+ * Pass this type to the Mongoose Model constructor:
+ * ```
+ * const Rebate = mongoose.model<RebateDocument, RebateModel>("Rebate", RebateSchema);
+ * ```
+ */
 export type RebateDocument = mongoose.Document<mongoose.Types.ObjectId, RebateQueries> &
   RebateMethods & {
     name?: string;
+    homeEnergyProjectId?: HomeEnergyProjectDocument['_id'] | HomeEnergyProjectDocument;
+    calculation?: RebateCalculationDocument;
     _id: mongoose.Types.ObjectId;
   };
 

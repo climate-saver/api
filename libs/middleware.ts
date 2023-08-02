@@ -3,9 +3,7 @@ import {NextFunction, Request, Response} from 'express';
 
 // Allow cross-origin requests from the admin, provider, et al.
 // In development, also allow requests from the local hostname, e.g. mycomputer.local.
-const allowedHosts = [
-  process.env.WEB_URL,
-];
+const allowedHosts = [process.env.WEB_URL];
 const allowedOrigins = new Set(
   allowedHosts.map((hostname) => process.env.API_PROTOCOL! + hostname)
 );
