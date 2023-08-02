@@ -39,6 +39,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon",
+    "deploy:stg": "gcloud run deploy api-stg --source",
     "lint": " eslint --max-warnings 0 \"**/*.ts\" && tsc",
     "prettier": "prettier --write \"**/*.{ts,tsx}\"",
     "start": "ts-node server.ts",

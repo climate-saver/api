@@ -1,6 +1,4 @@
-import express from 'express';
 import mongoose from 'mongoose';
-import Config from './configuration.json';
 import {createApp} from './app';
 
 const dbUri = process.env.MONGO_URI;

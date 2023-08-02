@@ -1,20 +1,25 @@
 import os from 'os';
 import {NextFunction, Request, Response} from 'express';
 
+// Allow cross-origin requests from the admin, provider, et al.
+// In development, also allow requests from the local hostname, e.g. mycomputer.local.
+const allowedHosts = [
+  process.env.WEB_URL,
+];
+const allowedOrigins = new Set(
+  allowedHosts.map((hostname) => process.env.API_PROTOCOL! + hostname)
+);
+
 export const Middleware = {
   isOriginAllowed: function (origin: string) {
-    // TODO use environment variable to determine if development.
-    let development = true;
-    if (development) {
+    if (process.env.ENVIRONMENT === 'Development') {
       // Allow local hostnames/IP addresses so you can make CORS requests from localhost and from
       // other hosts on the LAN (e.g. from visiting the SEAT on your phone).
       const allowedHostnames = ['localhost', '127.0.0.1', os.hostname()];
-      if (allowedHostnames.some((hostname) => origin.startsWith(`http://${hostname}:`))) {
-        return true;
-      }
+      return allowedHostnames.some((hostname) => origin.startsWith(`http://${hostname}:`));
     }
-    // TODO check if non development origin is allowed.
-    // return allowedOrigins.has(origin);
+    // Only allow the configured hosts.
+    return allowedOrigins.has(origin);
   },
 
   /** Add CORS headers to responses. */
