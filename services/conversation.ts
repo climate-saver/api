@@ -44,7 +44,7 @@ const MessagesScript = [
   },
   {
     message: 'Thanks! Give me a second to find the best options for you...',
-    more: true,
+    readyForRecommendations: true,
   },
 ];
 
@@ -67,11 +67,9 @@ export const ConversationService = {
     await conversation.save();
   },
 
-  addNextMessages: async function (conversationId: string, messages: IMessage[]) {
+  addNextMessage: async function (conversationId: string, message: IMessage) {
     const conversation = await this.getConversation(conversationId);
-    for (let message of messages) {
-      conversation.messages.push(message);
-    }
+    conversation.messages.push(message);
     await conversation.save();
   },
 
@@ -132,13 +130,11 @@ export const ConversationService = {
     return messages;
   },
 
-  getNextMessages: async function (conversationId: string): Promise<IMessage[]> {
+  getNextMessage: async function (conversationId: string): Promise<IMessage | undefined> {
     const conversation = await this.getConversation(conversationId);
     const botMessages = conversation.messages.filter((message) => message.sender === 'Bot');
     if (MessagesScript[botMessages.length]) {
-      return [{...MessagesScript[botMessages.length], sender: 'Bot'}];
+      return {...MessagesScript[botMessages.length], sender: 'Bot'};
     }
-    // The user is now ready for recommendations:
-    return this.getProjectRecommendationMessages(conversationId);
   },
 };

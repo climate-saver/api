@@ -8,3 +8,12 @@ export interface UserHomeInfo {
 }
 
 export type UserHomeInfoKey = keyof UserHomeInfo;
+
+export interface ProjectRecommendation {
+  name: string;
+  annualEnergySavings: number;
+  totalInstallationCost: number;
+  annualInstallationCost: number;
+  percentageEmissionsReduction: number;
+  rebateAmount: number;
+}

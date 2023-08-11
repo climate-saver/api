@@ -1,6 +1,7 @@
 import {HomeEnergyProjectDocument} from '@modelInterfaces';
-import {UserHomeInfo} from '../global/types';
+import {ProjectRecommendation, UserHomeInfo} from '../global/types';
 import {OpenAI} from '../libs/openAI';
+import {HomeEnergyProject, Rebate} from '../models';
 
 const GPT_CALL_FUNCTIONS = {
   WOULD_RECOMMEND: {
@@ -190,5 +191,54 @@ export const HomeEnergyProjectService = {
       throw new Error('No value found.');
     }
     return parseInt(JSON.parse(functionCallArgs).percentageReduction);
+  },
+
+  getRebateAmount: async function (
+    project: HomeEnergyProjectDocument,
+    cost: number
+  ): Promise<number> {
+    const rebate = await Rebate.findOne({homeEnergyProjectId: project.id});
+    if (!rebate) {
+      return 0;
+    }
+    if (!rebate.calculation?.percent) {
+      return rebate.calculation?.max!;
+    }
+    if (!rebate.calculation?.max) {
+      return Math.round((rebate.calculation?.percent! * cost) / 100);
+    }
+    return Math.min(
+      Math.round((rebate.calculation?.percent! * cost) / 100),
+      rebate.calculation?.max!
+    );
+  },
+
+  getRecommendations: async function (
+    userHomeInfo: UserHomeInfo
+  ): Promise<ProjectRecommendation[]> {
+    const projects: HomeEnergyProjectDocument[] = await HomeEnergyProject.find();
+    const recommendations = [];
+    for (const project of projects) {
+      try {
+        if (await this.isRecommended(project, userHomeInfo)) {
+          const [savings, cost, percentageReduction] = await Promise.all([
+            HomeEnergyProjectService.estimateMonthlySavings(project, userHomeInfo),
+            HomeEnergyProjectService.estimateCost(project, userHomeInfo),
+            HomeEnergyProjectService.estimateEmissionReduction(project, userHomeInfo),
+          ]);
+          recommendations.push({
+            name: project.name!,
+            annualEnergySavings: Math.round(savings * 12),
+            totalInstallationCost: Math.round(cost),
+            annualInstallationCost: Math.round(cost / 11.3),
+            percentageEmissionsReduction: Math.round(percentageReduction),
+            rebateAmount: await this.getRebateAmount(project, cost),
+          });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    return recommendations;
   },
 };

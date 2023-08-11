@@ -12,7 +12,6 @@ router.post('/', async (req: Request, res: Response) => {
 });
 
 router.post('/:conversationId/messages', async (req: Request, res: Response) => {
-  console.log(req.body);
   await Promise.all([
     ConversationService.addUserMessage(req.params.conversationId, req.body.message),
     UserService.maybeAddUserInfoFromMessage(
@@ -24,10 +23,14 @@ router.post('/:conversationId/messages', async (req: Request, res: Response) => 
   res.sendStatus(204);
 });
 
-router.get('/:conversationId/nextMessages', async (req: Request, res: Response) => {
-  const nextMessages = await ConversationService.getNextMessages(req.params.conversationId);
-  await ConversationService.addNextMessages(req.params.conversationId, nextMessages);
-  res.status(200).json(nextMessages);
+router.get('/:conversationId/nextMessage', async (req: Request, res: Response) => {
+  const nextMessage = await ConversationService.getNextMessage(req.params.conversationId);
+  if (!nextMessage) {
+    res.status(200).json({});
+    return;
+  }
+  await ConversationService.addNextMessage(req.params.conversationId, nextMessage);
+  res.status(200).json(nextMessage);
 });
 
 export const ConversationController: Router = router;
