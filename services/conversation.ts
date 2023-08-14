@@ -11,10 +11,12 @@ const MessagesScript = [
       `home energy options that save you money and reduce your carbon footprint. ` +
       `I'll ask you a couple questions about your current home energy situation, ` +
       `and get you recommendations within 5 minutes. Ready to get started?`,
+    autoFocus: true,
   },
   {
     message: 'How many total square feet (roughly) is your home?',
     homeInfoKey: 'squareFootage',
+    autoFocus: true,
   },
   {
     message: 'What is your current heating system?',
@@ -41,6 +43,7 @@ const MessagesScript = [
   {
     message: 'Lastly, what is the age in years (roughly) of your home?',
     homeInfoKey: 'ageOfHome',
+    autoFocus: true,
   },
   {
     message: 'Thanks! Give me a second to find the best options for you...',

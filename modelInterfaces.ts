@@ -21,6 +21,7 @@ export type ConversationMessage = {
   homeInfoKey?: string;
   answerSuggestions: string[];
   more?: boolean;
+  autoFocus?: boolean;
   _id: mongoose.Types.ObjectId;
 };
 
@@ -108,6 +109,7 @@ export type ConversationMessageDocument = mongoose.Types.Subdocument & {
   homeInfoKey?: string;
   answerSuggestions: mongoose.Types.Array<string>;
   more?: boolean;
+  autoFocus?: boolean;
   _id: mongoose.Types.ObjectId;
 };
 
@@ -136,7 +138,6 @@ export type ConversationDocument = mongoose.Document<mongoose.Types.ObjectId, Co
  * ```
  */
 export type HomeEnergyProject = {
-  key?: string;
   name?: string;
   _id: mongoose.Types.ObjectId;
   updated?: Date;
@@ -221,7 +222,6 @@ export type HomeEnergyProjectDocument = mongoose.Document<
   HomeEnergyProjectQueries
 > &
   HomeEnergyProjectMethods & {
-    key?: string;
     name?: string;
     _id: mongoose.Types.ObjectId;
     updated?: Date;

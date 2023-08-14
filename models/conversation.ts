@@ -8,6 +8,7 @@ export interface IMessage {
   homeInfoKey?: string;
   answerSuggestions?: string[];
   more?: boolean;
+  autoFocus?: boolean;
 }
 
 const MessageSchema = new mongoose.Schema({
@@ -16,6 +17,7 @@ const MessageSchema = new mongoose.Schema({
   homeInfoKey: String,
   answerSuggestions: [String],
   more: Boolean,
+  autoFocus: Boolean,
 });
 
 const ConversationSchema = new mongoose.Schema({
